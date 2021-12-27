@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalFinance.Api", "PersonalFinance.Api\PersonalFinance.Api.csproj", "{AD042403-BDF0-4534-A129-41268FF82139}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalFinance.Transactions.MessageProcessor", "PersonalFinance.Transactions.MessageProcessor\PersonalFinance.Transactions.MessageProcessor.csproj", "{D498BE78-5EF6-4773-B4A9-1C0729A9213E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD042403-BDF0-4534-A129-41268FF82139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD042403-BDF0-4534-A129-41268FF82139}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD042403-BDF0-4534-A129-41268FF82139}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD042403-BDF0-4534-A129-41268FF82139}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D498BE78-5EF6-4773-B4A9-1C0729A9213E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D498BE78-5EF6-4773-B4A9-1C0729A9213E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D498BE78-5EF6-4773-B4A9-1C0729A9213E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D498BE78-5EF6-4773-B4A9-1C0729A9213E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C6B8AECC-BA1E-4B1D-969B-FD95F26AF9F6}
+	EndGlobalSection
+EndGlobal
