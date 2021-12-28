@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PersonalFinance.Transactions.MessageProcessor;
 using PersonalFinance.Transactions.MessageProcessor.CardTransactions;
+using PersonalFinance.Transactions.MessageProcessor.Configurations;
 
 ServiceProvider serviceProvider;
 IConfiguration configuration = new ConfigurationBuilder()
@@ -18,6 +19,7 @@ var hostBuilder = new HostBuilder()
     .ConfigureServices(serviceCollection =>
     {
         RegisterServices(serviceCollection);
+        serviceCollection.ConfigureMongoDb(configuration);
         serviceCollection.AddHostedService<ConsoleApplication>();
     });
 

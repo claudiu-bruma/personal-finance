@@ -1,4 +1,8 @@
-﻿using Azure.Messaging.ServiceBus; 
+﻿using Azure.Messaging.ServiceBus;
+using MongoDB.Bson.IO;
+using Newtonsoft.Json;
+using PersonalFinance.Transactions.MessageProcessor.Entities;
+using PersonalFinance.Transactions.MessageProcessor.Services.CardTransactionServices;
 
 namespace PersonalFinance.Transactions.MessageProcessor.CardTransactions
 {
@@ -6,7 +10,8 @@ namespace PersonalFinance.Transactions.MessageProcessor.CardTransactions
     {
         private ServiceBusClient _serviceBusClient;
         private ServiceBusProcessor _serviceBusProcessor;
-        public CardTransactionProcessor(ServiceBusClient serviceBusClient )
+        private ICardTransactionService _cardTransactionService;
+        public CardTransactionProcessor(ServiceBusClient serviceBusClient ,ICardTransactionService cardTransactionService)
         {
             _serviceBusClient = serviceBusClient;
             _serviceBusProcessor = _serviceBusClient.CreateProcessor(
@@ -17,6 +22,7 @@ namespace PersonalFinance.Transactions.MessageProcessor.CardTransactions
 
             // add handler to process any errors
             _serviceBusProcessor.ProcessErrorAsync += ErrorHandler;
+            _cardTransactionService = cardTransactionService;
 
         }
 
@@ -31,6 +37,8 @@ namespace PersonalFinance.Transactions.MessageProcessor.CardTransactions
             string body = args.Message.Body.ToString();
             Console.WriteLine($"Received: {body} ");
 
+            var deserializedMessage = Newtonsoft.Json.JsonConvert.DeserializeObject<CardTransactionEntity>(body);
+            await _cardTransactionService.CreateAsync(deserializedMessage);
             // complete the message. messages is deleted from the subscription. 
             await args.CompleteMessageAsync(args.Message);
         }
