@@ -1,20 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using Microsoft.Extensions.Hosting;  
 namespace PersonalFinance.Transactions.MessageProcessor
 {
-    internal class ConsoleApplication
+    internal class ConsoleApplication : IHostedService
     {
-        public ConsoleApplication( )
+        private MessageProcessor _messageProcessor;
+        public ConsoleApplication(MessageProcessor messageProcessor )
         {
+            _messageProcessor= messageProcessor;
+        } 
+
+        public async Task StartAsync(CancellationToken cancellationToken)
+        { 
+            await _messageProcessor.SetupProcessingCardTransactions();
             
         }
 
-        public void Run()
+        public async Task StopAsync(CancellationToken cancellationToken)
         {
+            await _messageProcessor.DisposeAsync();
             
         }
     }

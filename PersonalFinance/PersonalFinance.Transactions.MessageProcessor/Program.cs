@@ -2,40 +2,39 @@
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using PersonalFinance.Transactions.MessageProcessor;
+using PersonalFinance.Transactions.MessageProcessor.CardTransactions;
 
 ServiceProvider serviceProvider;
 IConfiguration configuration = new ConfigurationBuilder()
 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+.AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development"}.json", false)
 .AddEnvironmentVariables()
 .AddCommandLine(args)
 .Build();
 
-RegisterServices();
-IServiceScope scope = serviceProvider.CreateScope();
-scope.ServiceProvider.GetRequiredService<ConsoleApplication>().Run();
-DisposeServices();
+var hostBuilder = new HostBuilder()   
+    .ConfigureServices(serviceCollection =>
+    {
+        RegisterServices(serviceCollection);
+        serviceCollection.AddHostedService<ConsoleApplication>();
+    });
 
-void RegisterServices()
+using (var host = hostBuilder.Build())
 {
-    var services = new ServiceCollection();
+    await host.RunAsync();
+}
+
+void RegisterServices(IServiceCollection services)
+{ 
     services.AddAzureClients(builder =>
     {
         builder.AddServiceBusClient(configuration.GetConnectionString("ServiceBus"));
     });
-    //services.AddSingleton<ICustomer, Customer>();
+    services.AddSingleton<ICardTransactionProcessor, CardTransactionProcessor>();
     services.AddSingleton<IConfiguration>(configuration);
     services.AddSingleton<ConsoleApplication>();
+    services.AddSingleton<MessageProcessor>();
     serviceProvider = services.BuildServiceProvider(true);
-}
-void DisposeServices()
-{
-    if (serviceProvider == null)
-    {
-        return;
-    }
-    if (serviceProvider is IDisposable)
-    {
-        ((IDisposable)serviceProvider).Dispose();
-    }
 }
