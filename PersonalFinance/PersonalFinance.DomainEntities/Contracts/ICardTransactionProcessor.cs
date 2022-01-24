@@ -1,8 +1,8 @@
 ﻿using Azure.Messaging.ServiceBus;
 
-namespace PersonalFinance.Transactions.MessageProcessor.CardTransactions
+namespace PersonalFinance.Domain.Contracts
 {
-    internal interface ICardTransactionProcessor : IAsyncDisposable
+    public interface ICardTransactionProcessor : IAsyncDisposable
     {
         Task StartProcessingMessages();
         Task MessageHandler(ProcessMessageEventArgs args);

@@ -1,7 +1,8 @@
-﻿using PersonalFinance.Domain.Contracts;
-using PersonalFinance.Transactions.MessageProcessor.CardTransactions;
+﻿
 
-namespace PersonalFinance.Transactions.MessageProcessor
+using PersonalFinance.Domain.Contracts;
+
+namespace PersonalFinance.EventStore.MessageProcessor
 {
     internal class MessageProcessor : IAsyncDisposable
     {

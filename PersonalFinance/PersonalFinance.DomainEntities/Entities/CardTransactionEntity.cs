@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace PersonalFinance.Transactions.MessageProcessor.Entities
+namespace PersonalFinance.Domain.Entities
 {
     public class CardTransactionEntity
-    {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
+    { 
         public decimal Value { get; set; }
         public string? SellerName { get; set; }
         public DateTime TransactionDate { get; set; }
