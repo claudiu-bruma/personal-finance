@@ -16,7 +16,7 @@ namespace PersonalFinance.Transactions.MessageProcessor.CardTransactions
             _serviceBusClient = serviceBusClient;
             _serviceBusProcessor = _serviceBusClient.CreateProcessor(
                 "newcardtransactions",
-                "MQPPRocessingSubscription",
+                "EventStoreTransactionSubscription",
                 new ServiceBusProcessorOptions());
             _serviceBusProcessor.ProcessMessageAsync += MessageHandler;
 

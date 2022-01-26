@@ -3,8 +3,10 @@ using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PersonalFinance.Domain.Contracts;
 using PersonalFinance.EventStore.MessageProcessor; 
 using PersonalFinance.EventStore.MessageProcessor.Configurations;
+using PersonalFinance.Transactions.MessageProcessor.CardTransactions;
 
 ServiceProvider serviceProvider;
 IConfiguration configuration = new ConfigurationBuilder()
@@ -32,7 +34,7 @@ void RegisterServices(IServiceCollection services)
     {
         builder.AddServiceBusClient(configuration.GetConnectionString("ServiceBus"));
     });
-    //services.AddSingleton<ICardTransactionProcessor, CardTransactionProcessor>();
+    services.AddSingleton<ICardTransactionProcessor, CardTransactionProcessor>();
     services.AddSingleton<IConfiguration>(configuration);
     services.AddSingleton<ConsoleApplication>();
     services.AddSingleton<MessageProcessor>();
